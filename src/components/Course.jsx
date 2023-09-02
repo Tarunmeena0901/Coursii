@@ -12,6 +12,7 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { courseState } from "../../store/atoms/course";
 import { courseDescription, courseDetail, courseImage, isCourseLoading } from "../../store/slelectors/courseSelectors";
 import { courseTitle } from "../../store/slelectors/courseSelectors";
+import { red } from "@mui/material/colors";
 
 function Course() {
     const setCourse = useSetRecoilState(courseState);
@@ -27,7 +28,7 @@ function Course() {
             }
         })
 
-        if(response.data.course){
+        if (response.data.course) {
             setCourse({
                 isLoading: false,
                 course: response.data.course
@@ -35,16 +36,16 @@ function Course() {
         }
     };
 
-    useEffect(()=>{
+    useEffect(() => {
         init()
-    },[])
+    }, [])
 
 
 
     if (courseLoading) {
-        return<div style={{marginTop: 300 , display: "flex", justifyContent: "center"}}>
-        <CircularProgress />
-    </div>
+        return <div style={{ marginTop: 300, display: "flex", justifyContent: "center" }}>
+            <CircularProgress />
+        </div>
     }
     return <div>
         <Graytopper />
@@ -53,7 +54,7 @@ function Course() {
                 <UpdatedCourse />
             </Grid>
             <Grid item lg={4} md={12} sm={12}>
-                <CourseCard  />
+                <CourseCard />
             </Grid>
         </Grid>
     </div>
@@ -63,8 +64,8 @@ function CourseCard() {
     const title = useRecoilValue(courseTitle);
     const imageLink = useRecoilValue(courseImage);
     const description = useRecoilValue(courseDescription);
-    
-    return <Card style={{ margin: 10, width: 400, minHieght: 200 , border: "2px solid #28282B"}}>
+
+    return <Card style={{ margin: 10, width: 400, minHieght: 200, border: "2px solid #28282B" }}>
         <img src={imageLink} alt="NA" width={400} />
         <Typography textAlign={"center"} variant={"h4"}>{title}</Typography>
 
@@ -75,7 +76,7 @@ function CourseCard() {
 }
 
 function UpdatedCourse() {
-    const [courseDetail , setCourse] = useRecoilState(courseState);
+    const [courseDetail, setCourse] = useRecoilState(courseState);
     const [title, setTitle] = useState(courseDetail.course.title);
     const [description, setDec] = useState(courseDetail.course.Description);
     const [imageLink, setImage] = useState(courseDetail.course.imageLink);
@@ -83,12 +84,12 @@ function UpdatedCourse() {
 
     return <div style={{ display: "flex", justifyContent: "center" }}>
 
-        <Card varint={"outlined"} style={{ padding: 10, width: 500, marginTop: 100 , border: "2px solid #28282B" }}>
+        <Card varint={"outlined"} style={{ padding: 10, width: 500, marginTop: 100, border: "2px solid #28282B" }}>
             <TextField fullWidth={true}
                 value={title}
                 label="title"
                 variant="outlined"
-                
+
                 onChange={(e) => {
                     setTitle(e.target.value);
                 }} />
@@ -101,8 +102,8 @@ function UpdatedCourse() {
                 onChange={(e) => {
                     setDec(e.target.value);
                 }} />
-            <br /><br/>
-            
+            <br /><br />
+
             <TextField fullWidth={true}
                 value={imageLink}
                 label="Image Link"
@@ -110,27 +111,42 @@ function UpdatedCourse() {
                 onChange={(e) => {
                     setImage(e.target.value);
                 }} />
-            <br /><br/>
+            <br /><br />
+            <div style={{display: "flex", flexDirection:"row"}}>
+                <div>
             <Button variant="contained"
                 onClick={async () => {
-                    await axios.put("http://localhost:3000/admin/courses/" + courseId, {
-                        method: "PUT",
-                        body: JSON.stringify({
+                    axios.put("http://localhost:3000/admin/courses/" + courseId, {
                             title: title,
                             description: description,
                             imageLink: imageLink,
                             published: true
-                        }),
+                        }, {
                         headers: {
-                            "Content-Type": "application/json",
-                            "Authorization": "Bearer " + localStorage.getItem("token")
+                            "Authorization": "bearer " + localStorage.getItem("token")
                         }
-                    })
+                    });
+                    let updatedCourse = {
+                        _id: courseId,
+                        title: title,
+                        description: description,
+                        imageLink: imageLink
+                    };
+                    setCourse({
+                        course: updatedCourse,
+                        isLoading: false
+                    });
                     alert("course updated");
-                    
+
                 }
                 }>Update</Button>
-
+                </div>
+                <div style={{marginLeft: 5}}> 
+                <Button variant="contained" style={{backgroundColor: "#D2042D"}}>
+                  Delete
+                </Button>
+                </div>
+</div>
 
 
 
@@ -141,7 +157,7 @@ function UpdatedCourse() {
 
 function Graytopper() {
     const title = useRecoilValue(courseTitle);
-    return <div style={{ backgroundColor: "#A020F0", width: "100vw", marginBottom: -150, height: 250, zIndex: 0 , top: 0 , border: "2px solid #28282B" }}>
+    return <div style={{ backgroundColor: "#A020F0", width: "100vw", marginBottom: -150, height: 250, zIndex: 0, top: 0, border: "2px solid #28282B" }}>
         <div style={{ display: "flex", justifyContent: "center", flexDirection: "column", height: 250 }}>
             <div>
                 <Typography variant="h3" textAlign={"center"} style={{ fontWeight: 600, color: "white" }}>

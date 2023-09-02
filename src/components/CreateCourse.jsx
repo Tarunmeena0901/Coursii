@@ -17,7 +17,7 @@ function CreateCourse() {
         
     
       <div style={{display:"flex",justifyContent:"center" , marginTop: 100}}>
-       <Card varint={"outlined"} style= {{ display:"flex",flexDirection:"column-reverse", width:400, padding: 20, height: "400px"}}>
+       <Card varint={"outlined"} style= {{ display:"flex",flexDirection:"column-reverse", width:400, padding: 20, height: "400px" , border:"3px solid black"}}>
        
              <Button variant="contained"
              onClick={()=>{
@@ -35,7 +35,10 @@ function CreateCourse() {
                 }
              }).then(()=>{
                 navigate("/courses");
-             })}
+             })
+            alert("Course Added");
+            }
+             
              }>Create</Button>
              <br />
              <TextField fullWidth={true}

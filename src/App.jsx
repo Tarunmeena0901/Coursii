@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Landing from './components/Landing';
-import AppBar from "./components/AppBar";
+import AppBar1 from "./components/AppBar";
 import CreateCourse from './components/CreateCourse';
 import Signup from './components/Signup';
 import Courses from './components/Courses';
@@ -10,6 +10,7 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import {userState} from '../store/atoms/user';
 
+
 function App() {
     return (
         <RecoilRoot>
@@ -18,7 +19,7 @@ function App() {
 
                 <Router>
                     <InitUser />
-                    <AppBar />
+                    <AppBar1 />
                     <Routes>
                         <Route path="/" element={<Landing />} />
 
