@@ -1,7 +1,6 @@
-# welcome to my Full stack project where
-# I used React for the front end 
-# written the server code using express 
-# data is stored in mongoDb cloud
-# used axios to fetch the data from the server
-# Used Recoil state management library toh optimise the website and reduce the rerenders in website to minimum
-# used MUI to style the components
+To start the website
+$ replace the mongodb databse url in .env while
+$ run the backend with "node server/index.js"
+$ start the front-end with "npm run dev" in the main directory
+
+Sign with your new account
